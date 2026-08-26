@@ -1,0 +1,23 @@
+<div style="max-width: 700px; margin: 24px auto; padding: 0 16px;">
+  <h2>Incoming orders</h2>
+
+  <label>Franchise:
+    <select [(ngModel)]="selectedFranchiseId" (ngModelChange)="loadOrders()">
+      <option value="">Select franchise</option>
+      <option *ngFor="let f of franchises" [value]="f.id">{{ f.name }}</option>
+    </select>
+  </label>
+
+  <div *ngFor="let o of orders" style="border-top: 1px solid #ddd; padding: 12px 0; display: flex; justify-content: space-between; align-items: center;">
+    <div>
+      <p style="font-weight: 600; margin: 0;">Order #{{ o.id }}</p>
+      <p style="font-size: 12px; color: #777; margin: 2px 0 0;">Status: {{ o.status }}</p>
+    </div>
+    <select (change)="updateStatus(o.id, $any($event.target).value)">
+      <option value="">Change status</option>
+      <option *ngFor="let s of statusOptions" [value]="s">{{ s }}</option>
+    </select>
+  </div>
+
+  <p *ngIf="selectedFranchiseId && orders.length === 0" style="color: #777;">No orders yet for this franchise.</p>
+</div>
