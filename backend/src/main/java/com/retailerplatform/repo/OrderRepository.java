@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface OrderRepository extends JpaRepository<Order, String> {
     List<Order> findByDirtyForCrmTrue();
+    List<Order> findByFranchiseId(String franchiseId);
+    List<Order> findByRetailerId(String retailerId);
 }
