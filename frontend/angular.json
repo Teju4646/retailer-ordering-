@@ -23,9 +23,16 @@
           },
           "configurations": {
             "production": {
-              "outputHashing": "all"
+              "outputHashing": "all",
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ]
             }
-          }
+          },
+          "defaultConfiguration": "production"
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -34,7 +41,7 @@
               "buildTarget": "retailer-ordering-ui:build:production"
             },
             "development": {
-              "buildTarget": "retailer-ordering-ui:build"
+              "buildTarget": "retailer-ordering-ui:build:development"
             }
           },
           "defaultConfiguration": "development"
