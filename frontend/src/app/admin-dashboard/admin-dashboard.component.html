@@ -1,0 +1,28 @@
+<div style="max-width: 700px; margin: 24px auto; padding: 0 16px;">
+  <h2>Metrics dashboard</h2>
+
+  <div *ngIf="metrics" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 24px;">
+    <div style="background: #f0f0ee; border-radius: 8px; padding: 16px;">
+      <p style="font-size: 13px; color: #777; margin: 0;">Total purchases</p>
+      <p style="font-size: 22px; font-weight: 600; margin: 4px 0 0;">{{ metrics.totalPurchases }}</p>
+    </div>
+    <div style="background: #f0f0ee; border-radius: 8px; padding: 16px;">
+      <p style="font-size: 13px; color: #777; margin: 0;">Units sold</p>
+      <p style="font-size: 22px; font-weight: 600; margin: 4px 0 0;">{{ metrics.unitsSold }}</p>
+    </div>
+  </div>
+
+  <div *ngIf="metrics">
+    <h3>Top sellers</h3>
+    <div *ngFor="let t of metrics.topSales" style="display: flex; justify-content: space-between; padding: 6px 0;">
+      <span>{{ t.sku }}</span>
+      <span>{{ t.unitsSold }} units</span>
+    </div>
+
+    <h3>Market share</h3>
+    <div *ngFor="let m of metrics.marketSharePct" style="display: flex; justify-content: space-between; padding: 6px 0;">
+      <span>{{ m.sku }}</span>
+      <span>{{ m.sharePct }}%</span>
+    </div>
+  </div>
+</div>
