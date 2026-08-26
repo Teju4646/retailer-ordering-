@@ -1,0 +1,46 @@
+<div style="max-width: 700px; margin: 24px auto; padding: 0 16px;">
+  <h2>Catalog</h2>
+
+  <label>Retailer:
+    <select [(ngModel)]="selectedRetailerId">
+      <option value="">Select retailer</option>
+      <option *ngFor="let r of retailers" [value]="r.id">{{ r.name }} ({{ r.city }})</option>
+    </select>
+  </label>
+
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin: 20px 0;">
+    <div *ngFor="let p of products" style="border: 1px solid #ddd; border-radius: 8px; padding: 12px;">
+      <p style="font-weight: 600; margin: 0 0 4px;">{{ p.name }}</p>
+      <p style="font-size: 12px; color: #777; margin: 0 0 8px;">{{ p.sku }} · HSN {{ p.hsnCode }}</p>
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <span>&#8377;{{ p.unitPrice }}</span>
+        <button (click)="addToCart(p)">Add</button>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="cart.length > 0" style="border-top: 1px solid #ddd; padding-top: 12px;">
+    <h3>Order summary</h3>
+    <div *ngFor="let c of cart" style="display: flex; justify-content: space-between;">
+      <span>{{ c.product.name }} x{{ c.qty }}</span>
+      <span>&#8377;{{ c.product.unitPrice * c.qty }}</span>
+    </div>
+    <div style="display: flex; justify-content: space-between; font-weight: 600; margin-top: 8px;">
+      <span>Subtotal (excl. GST)</span>
+      <span>&#8377;{{ subtotal }}</span>
+    </div>
+    <p style="font-size: 12px; color: #777;">GST is calculated per line item based on retailer/franchise state on the backend.</p>
+    <button (click)="placeOrder()" [disabled]="!selectedRetailerId">Place order</button>
+  </div>
+
+  <div *ngIf="placedOrder" style="margin-top: 20px; border-top: 1px solid #ddd; padding-top: 12px;">
+    <h3>Order placed — #{{ placedOrder.id }}</h3>
+    <p>Status: {{ placedOrder.status }}</p>
+    <p>Routed to franchise: {{ placedOrder.franchiseId }}</p>
+    <div *ngFor="let line of placedOrder.lineItems">
+      <p>{{ line.productSku }} — taxable &#8377;{{ line.taxableValue }},
+        CGST &#8377;{{ line.cgst }}, SGST &#8377;{{ line.sgst }}, IGST &#8377;{{ line.igst }},
+        total &#8377;{{ line.lineTotal }}</p>
+    </div>
+  </div>
+</div>
